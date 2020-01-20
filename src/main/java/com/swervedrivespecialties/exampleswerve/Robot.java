@@ -42,14 +42,26 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Encoder Value:", drive.getEncoderValue());
     }   
 
+    private double distanceFromWall = 0;
+    private double delayTime = 0;
+
     @Override
     public void autonomousInit() {
         super.autonomousInit();
+
+        SmartDashboard.putNumber("Distance From Wall", 0);
+        SmartDashboard.putNumber("Delay Time", 0);
+
+        // double distanceFromWall = SmartDashboard.getNumber("Distance From Wall", 0);
+        // double delayTime = SmartDashboard.getNumber("Delay Time", 0);
     }
 
     @Override
     public void autonomousPeriodic() {
         super.autonomousPeriodic();
+
+        double distanceFromWall = SmartDashboard.getNumber("Distance From Wall", 0);
+        double delayTime = SmartDashboard.getNumber("Delay Time", 0);
     }
 
     @Override
