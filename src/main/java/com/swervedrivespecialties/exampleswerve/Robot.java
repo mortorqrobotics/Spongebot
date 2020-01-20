@@ -3,6 +3,7 @@ package com.swervedrivespecialties.exampleswerve;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.LimelightSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.LidarSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.DriveDist;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,6 +16,7 @@ public class Robot extends TimedRobot {
 
     private LimelightSubsystem limelight = new LimelightSubsystem();
     private LidarSubsystem lidar = new LidarSubsystem();
+    private DriveDist drive = new DriveDist();
     
     public static OI getOi() {
         return oi;
@@ -37,6 +39,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("# of corners", limelight.getXCorners().length);
         SmartDashboard.putNumber("Distance:", limelight.getDistance());
         SmartDashboard.putNumber("Distance in cm:", lidar.getDistance());
+        SmartDashboard.putNumber("Encoder Value:", drive.getEncoderValue());
     }   
 
     @Override

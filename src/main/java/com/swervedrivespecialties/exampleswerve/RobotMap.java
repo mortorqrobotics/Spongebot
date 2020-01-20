@@ -19,11 +19,11 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 3; // CAN
 
     // Extra Staff 
-    public static final int ULTRA_SONIC_SENSOR_PORT = 4;
-
     public static double SPEED_ONE = 0.5;
     public static double SPEED_TWO = 1.0;
     public static double PERCENT_SPEED = SPEED_ONE;
+    public static double WHEEL_CIRCUMFERENCE = 12.5663706144; 
+    public static double GEAR_RATIO = 8.31;
 
     // Vision
     public static final double HEIGHT_OF_LIMELIGHT = 23;
