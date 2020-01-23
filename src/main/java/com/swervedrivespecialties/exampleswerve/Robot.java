@@ -68,35 +68,36 @@ public class Robot extends TimedRobot {
 
         switch (states) {
 
-            case AutonomousStates.DELAY_STATE:
+            case DELAY_STATE:
 
             if (System.currentTimeMillis() >= startTime + (delayTime * 1000)) {
                 states = AutonomousStates.MOVE_TO_CENTER_STATE;
             }
             break;
 
-            case AutonomousStates.MOVE_TO_CENTER_STATE;
+            case MOVE_TO_CENTER_STATE:
             
             break;
 
-            case AutonomousStates.ROTATE_TO_TARGET_STATE:
+            case ROTATE_TO_TARGET_STATE:
 
             break;
 
-            case AutonomousStates.AIM_STATE:
+            case AIM_STATE:
 
             break;
 
-            case AutonomousStates.SHOOT_STATE:
+            case SHOOT_STATE:
 
             break;
 
-            case AutonomousStates.STEP_BACK_STATE:
+            case STEP_BACK_STATE:
 
             break;
 
             default:
             System.out.println("Something is Wrong");
+            System.exit(1);
 
         }
     }
