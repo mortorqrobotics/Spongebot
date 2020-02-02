@@ -33,4 +33,8 @@ public class RobotMap {
     // Lidar
     public static final int LIDAR_OFFSET = -10;
     public static final int LIDAR_ID = 0; //PWM
+
+    // Shooter, Magazine and Intake
+    public static final int MAGAZINE_MOTOR_ID = 90; // CAN
+    public static final int MAGAZINE_ENCODER_ID = 5; // Analog input
 }
