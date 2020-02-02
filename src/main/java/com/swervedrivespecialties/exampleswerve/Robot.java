@@ -1,8 +1,8 @@
 package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.LimelightSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.LidarSubsystem;
+import com.swervedrivespecialties.exampleswerve.utils.Limelight;
+import com.swervedrivespecialties.exampleswerve.utils.Lidar;
 import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
 import com.swervedrivespecialties.exampleswerve.subsystems.DriveDist;
 
@@ -15,8 +15,8 @@ public class Robot extends TimedRobot {
 
     private static DrivetrainSubsystem drivetrain;
 
-    private LimelightSubsystem limelight = new LimelightSubsystem();
-    private LidarSubsystem lidar = new LidarSubsystem();
+    private Limelight limelight = new Limelight();
+    private Lidar lidar = new Lidar();
     private DriveDist drive = new DriveDist();
     
     public static OI getOi() {

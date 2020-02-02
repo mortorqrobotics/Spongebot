@@ -71,8 +71,12 @@ public class DrivetrainSubsystem extends Subsystem {
             new Translation2d(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0)
     );
 
-    private final Gyroscope gyroscope = new NavX(SPI.Port.kMXP);
+    public static final Gyroscope gyroscope = new NavX(SPI.Port.kMXP);
 
+    public static double getAngleInDegrees() {
+            return gyroscope.getAngle().toDegrees();
+    }
+    
     public DrivetrainSubsystem() {
         gyroscope.calibrate();
         gyroscope.setInverted(true); // You might not need to invert the gyro
