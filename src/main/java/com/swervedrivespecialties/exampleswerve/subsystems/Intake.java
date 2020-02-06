@@ -30,6 +30,8 @@ public class Intake {
     public void intakePeriodic() {
         if (intake) {
             intakeMotor.set((reverse) ? -speed : speed);
+        } else {
+            intakeMotor.set(0);
         }
     }
 }

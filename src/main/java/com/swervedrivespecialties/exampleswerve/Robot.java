@@ -1,6 +1,7 @@
 package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.Intake;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.Shooter;
 import com.swervedrivespecialties.exampleswerve.utils.Limelight;
@@ -18,6 +19,7 @@ public class Robot extends TimedRobot {
     private static DrivetrainSubsystem drivetrain;
 
     private Shooter shooter;
+    private Intake intake = new Intake();
     // private Limelight limelight = new Limelight();
     // private Lidar lidar = new Lidar();
     // private DriveDist drive = new DriveDist();
@@ -38,6 +40,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
+        intake.intakePeriodic();
         // magazine.magazinePeriodic();
         
         //SmartDashboard.putNumber("Distance", ultraSonicSensor.getDistanceInInches());
