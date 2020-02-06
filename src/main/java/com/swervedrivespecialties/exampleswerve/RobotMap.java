@@ -19,8 +19,9 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 3; // CAN
 
     // Extra Staff 
-    public static double DEFAULT_SPEED = 0.5;
-    public static double SECOND_SPEED = 1.0;
+    public static double DEFAULT_SPEED = 1.0;
+    public static double SECOND_SPEED = 0.5;
+
     public static double PERCENT_SPEED = DEFAULT_SPEED;
     public static double WHEEL_CIRCUMFERENCE = 12.5663706144; 
     public static double GEAR_RATIO = 8.31;

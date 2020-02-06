@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Shooter {
 
-    // TEMPORARY!!!!
     private Joystick m_stick;
 
     private static final int LEFT_MOTOR_ID = 99;
@@ -29,24 +28,18 @@ public class Shooter {
         double speed = 0;
 
         if (m_stick.getRawButton(1)) 
-        speed = .3;
+            speed = .3;
         else if (m_stick.getRawButton(3)) 
-        speed = .4;
+            speed = .4;
         else if (m_stick.getRawButton(4)) 
-        speed = .5;
+            speed = .5;
         else if (m_stick.getRawButton(2)) 
-        speed = .6;
-        else if (m_stick.getRawButton(7)) 
-        speed = .65;
-        else if (m_stick.getRawButton(8))
-        speed = .75;
-        else if (m_stick.getRawButton(10))
-        speed = 0.55;
+            speed = .6;
         
         
         if (m_stick.getRawButton(6)) {
-        if (speed != 0)
-            speed += .4;
+            if (speed != 0)
+                speed += .4;
         }
 
         speed *= .99;

@@ -33,15 +33,14 @@ public class MagazineSubsystem {
     public MagazineSubsystem() {
         m_pidController = motor.getPIDController();
 
+        // motor.getEncoder().setPosition(encoder.readAngle());
+
         m_pidController.setP(kP);
         m_pidController.setI(kI);
         m_pidController.setD(kD);
         m_pidController.setIZone(kIz);
         m_pidController.setFF(kFF);
         m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-    }
-
-    public void turn() {
     }
 
     public void magazinePeriodic() {
