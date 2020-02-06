@@ -9,7 +9,7 @@ public class OI {
     /*
        Add your joysticks and buttons here
      */
-    private Joystick primaryJoystick = new Joystick(0);
+    public Joystick primaryJoystick = new Joystick(0);
 
     public OI() {
         // Back button zeroes the drivetrain
@@ -18,11 +18,11 @@ public class OI {
         );
 
         new JoystickButton(primaryJoystick, 5).whileHeld(
-            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.SPEED_TWO)
+            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.DEFAULT_SPEED)
         );
 
         new JoystickButton(primaryJoystick, 5).whenReleased(
-            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.SPEED_ONE)
+            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.SECOND_SPEED)
         );
     }
 

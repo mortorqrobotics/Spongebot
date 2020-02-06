@@ -1,6 +1,8 @@
 package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.Shooter;
 import com.swervedrivespecialties.exampleswerve.utils.Limelight;
 import com.swervedrivespecialties.exampleswerve.utils.Lidar;
 import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
@@ -15,9 +17,11 @@ public class Robot extends TimedRobot {
 
     private static DrivetrainSubsystem drivetrain;
 
-    private Limelight limelight = new Limelight();
-    private Lidar lidar = new Lidar();
-    private DriveDist drive = new DriveDist();
+    private Shooter shooter;
+    // private Limelight limelight = new Limelight();
+    // private Lidar lidar = new Lidar();
+    // private DriveDist drive = new DriveDist();
+    // private MagazineSubsystem magazine = new MagazineSubsystem();
     
     public static OI getOi() {
         return oi;
@@ -27,20 +31,23 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         oi = new OI();
         drivetrain = DrivetrainSubsystem.getInstance();
+        
+        shooter = new Shooter(oi.primaryJoystick);
     }
 
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
+        // magazine.magazinePeriodic();
         
         //SmartDashboard.putNumber("Distance", ultraSonicSensor.getDistanceInInches());
-        SmartDashboard.putNumber("Area", limelight.getTA());
-        SmartDashboard.putNumber("X", limelight.getTX());
-        SmartDashboard.putNumber("Y", limelight.getTY());
-        SmartDashboard.putNumber("# of corners", limelight.getXCorners().length);
-        SmartDashboard.putNumber("Distance:", limelight.getDistance());
-        SmartDashboard.putNumber("Distance in cm:", lidar.getDistance());
-        SmartDashboard.putNumber("Encoder Value:", drive.getEncoderValue());
+        // SmartDashboard.putNumber("Area", limelight.getTA());
+        // SmartDashboard.putNumber("X", limelight.getTX());
+        // SmartDashboard.putNumber("Y", limelight.getTY());
+        // SmartDashboard.putNumber("# of corners", limelight.getXCorners().length);
+        // SmartDashboard.putNumber("Distance:", limelight.getDistance());
+        // SmartDashboard.putNumber("Distance in cm:", lidar.getDistance());
+        // SmartDashboard.putNumber("Encoder Value:", drive.getEncoderValue());
     }   
 
     private double distanceFromWall = 0;
