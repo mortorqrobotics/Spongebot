@@ -45,16 +45,16 @@ public class Robot extends TimedRobot {
         
         // drivetrain = DrivetrainSubsystem.getInstance();
         
-        // shooter = new Shooter(oi.primaryJoystick);
+        shooter = new Shooter(oi.primaryJoystick);
         pdp = new PowerDistributionPanel(RobotMap.PDP_ID);
         pdp.clearStickyFaults();
     }
 
     @Override
     public void robotPeriodic() {
-        // Scheduler.getInstance().run();
+        Scheduler.getInstance().run();
         intake.intakePeriodic(oi.primaryJoystick);
-        // shooter.shooterPeriodic();
+        shooter.shooterPeriodic();
         magazine.magazinePeriodic(oi.primaryJoystick);
 
         kicker.servoPeriodic(oi.primaryJoystick);

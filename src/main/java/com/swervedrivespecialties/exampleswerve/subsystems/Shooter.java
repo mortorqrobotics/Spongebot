@@ -24,13 +24,12 @@ public class Shooter {
 
         double speed = 0;
 
-        // if (m_stick.getRawButton(3)) 
-        //     speed = .2;
-        // else 
-        if (m_stick.getRawButton(4)) 
-            speed = .3;
-        else if (m_stick.getRawButton(2)) 
-            speed = .4;
+        if (m_stick.getRawButton(1)) 
+            speed = .1;
+        // else if (m_stick.getRawButton(4)) 
+        //     speed = .3;
+        // else if (m_stick.getRawButton(2)) 
+        //     speed = .4;
         
         
         if (m_stick.getRawButton(6)) {
@@ -44,7 +43,7 @@ public class Shooter {
             leftMotor.set(0);
             rightMotor.set(0);
         } else {
-            leftMotor.set((speed + .005) - .1);
+            leftMotor.set((speed + .005));
             rightMotor.set(-speed);
         }
         

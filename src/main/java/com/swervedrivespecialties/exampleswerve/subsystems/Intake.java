@@ -1,5 +1,6 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
@@ -37,7 +38,7 @@ public class Intake {
         } else {
             intakeMotor.set(0);
         }
-
+        
         // if (intake) {
         //     intakeMotor.set((reverse) ? -speed : speed);
         // } else {

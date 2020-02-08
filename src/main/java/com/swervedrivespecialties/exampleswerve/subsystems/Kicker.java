@@ -20,15 +20,15 @@ public class Kicker {
 	private static final double MIN_AGLE = 0.0;
 
 	public Kicker(int id1, int id2) {
-		spinner1 = new Servo(id1);
-		spinner2 = new Servo(id2);
+		// spinner1 = new Servo(id1);
+		spinner2 = new Servo(id2)h;
 	}
 
 	public void initDefaultCommand() {
 	}
 	
 	public void setSpinnerAngle(double angle) {
-		setAngle(angle, invertSpinner, spinner1, MIN_AGLE, MAX_ANGLE);
+		// setAngle(angle, invertSpinner, spinner1, MIN_AGLE, MAX_ANGLE);
 		setAngle(angle, invertSpinner, spinner2, MIN_AGLE, MAX_ANGLE);
 	}
 
@@ -59,7 +59,7 @@ public class Kicker {
 
 	public void servoPeriodic(Joystick joystick) {
 		if (joystick.getRawButton(2)) {
-			setSpinnerAngle(MAX_ANGLE);
+			setSpinnerAngle(90);
 		} else if (joystick.getRawButton(4)) {
 			setSpinnerAngle(-MAX_ANGLE);
 		}
