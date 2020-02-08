@@ -10,8 +10,8 @@ public class Shooter {
 
     private Joystick m_stick;
 
-    private static final int LEFT_MOTOR_ID = 99;
-    private static final int RIGHT_MOTOR_ID = 99;
+    private static final int LEFT_MOTOR_ID = 14;
+    private static final int RIGHT_MOTOR_ID = 1;
 
     private CANSparkMax leftMotor, rightMotor;
 
@@ -27,9 +27,7 @@ public class Shooter {
 
         double speed = 0;
 
-        if (m_stick.getRawButton(1)) 
-            speed = .3;
-        else if (m_stick.getRawButton(3)) 
+        if (m_stick.getRawButton(3)) 
             speed = .4;
         else if (m_stick.getRawButton(4)) 
             speed = .5;
@@ -44,8 +42,13 @@ public class Shooter {
 
         speed *= .99;
 
-        leftMotor.set(-(speed + .005));
-        rightMotor.set(speed);
+        if (speed == 0) {
+            leftMotor.set(0);
+            rightMotor.set(0);
+        } else {
+            leftMotor.set((speed + .005) - .1);
+            rightMotor.set(-speed);
+        }
 
         SmartDashboard.putNumber("left velocity", -leftMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("right velocity", rightMotor.getEncoder().getVelocity());

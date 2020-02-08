@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
     // private Limelight limelight = new Limelight();
     // private Lidar lidar = new Lidar();
     // private DriveDist drive = new DriveDist();
-    // private MagazineSubsystem magazine = new MagazineSubsystem();
+    private MagazineSubsystem magazine = new MagazineSubsystem();
     
     public static OI getOi() {
         return oi;
@@ -35,13 +35,15 @@ public class Robot extends TimedRobot {
         drivetrain = DrivetrainSubsystem.getInstance();
         
         shooter = new Shooter(oi.primaryJoystick);
+
     }
 
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
         intake.intakePeriodic();
-        // magazine.magazinePeriodic();
+        shooter.shooterPeriodic();
+        magazine.magazinePeriodic();
         
         //SmartDashboard.putNumber("Distance", ultraSonicSensor.getDistanceInInches());
         // SmartDashboard.putNumber("Area", limelight.getTA());

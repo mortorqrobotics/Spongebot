@@ -23,11 +23,11 @@ public class OI {
         );
 
         new JoystickButton(primaryJoystick, 5).whileHeld(
-            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.DEFAULT_SPEED)
+            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.SECOND_SPEED)
         );
 
         new JoystickButton(primaryJoystick, 5).whenReleased(
-            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.SECOND_SPEED)
+            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.DEFAULT_SPEED)
         );
 
         new JoystickAxis(primaryJoystick, 3).whileHeld(
@@ -44,6 +44,10 @@ public class OI {
 
         new JoystickAxis(primaryJoystick, 2).whenReleased(
             new InstantCommand(() -> Intake.stop())
+        );
+
+        new JoystickButton(primaryJoystick, RobotMap.MOVE_MAGAZINE_TO_NEXT_POSITION).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.nextPosition())
         );
     }
 

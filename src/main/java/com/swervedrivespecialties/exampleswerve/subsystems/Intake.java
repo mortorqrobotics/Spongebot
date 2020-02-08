@@ -8,10 +8,10 @@ public class Intake {
     public static boolean intake = false;
     public static boolean reverse = false;
 
-    private static final int INTAKE_ID = 89;
+    private static final int INTAKE_ID = 9;
     private CANSparkMax intakeMotor = new CANSparkMax(INTAKE_ID, MotorType.kBrushed);
 
-    private static final double speed = 0.35;
+    private static final double speed = 0.4;
 
     public static void startIntake() {
         intake = true;
