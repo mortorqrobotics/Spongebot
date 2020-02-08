@@ -5,19 +5,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.swervedrivespecialties.exampleswerve.RobotMap;
 
 public class Shooter {
 
     private Joystick m_stick;
-
-    private static final int LEFT_MOTOR_ID = 14;
-    private static final int RIGHT_MOTOR_ID = 1;
-
     private CANSparkMax leftMotor, rightMotor;
 
     public Shooter(Joystick m_stick) {
-        leftMotor = new CANSparkMax(LEFT_MOTOR_ID, MotorType.kBrushless);
-        rightMotor = new CANSparkMax(RIGHT_MOTOR_ID, MotorType.kBrushless);
+        leftMotor = new CANSparkMax(RobotMap.LEFT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
+        rightMotor = new CANSparkMax(RobotMap.RIGHT_SHOOTER_MOTOR_ID, MotorType.kBrushless);
 
         this.m_stick = m_stick;
     }
@@ -27,12 +24,13 @@ public class Shooter {
 
         double speed = 0;
 
-        if (m_stick.getRawButton(3)) 
-            speed = .4;
-        else if (m_stick.getRawButton(4)) 
-            speed = .5;
+        // if (m_stick.getRawButton(3)) 
+        //     speed = .2;
+        // else 
+        if (m_stick.getRawButton(4)) 
+            speed = .3;
         else if (m_stick.getRawButton(2)) 
-            speed = .6;
+            speed = .4;
         
         
         if (m_stick.getRawButton(6)) {
@@ -49,6 +47,7 @@ public class Shooter {
             leftMotor.set((speed + .005) - .1);
             rightMotor.set(-speed);
         }
+        
 
         SmartDashboard.putNumber("left velocity", -leftMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("right velocity", rightMotor.getEncoder().getVelocity());

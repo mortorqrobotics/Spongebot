@@ -2,13 +2,19 @@ package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.Intake;
+import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.Shooter;
 import com.swervedrivespecialties.exampleswerve.utils.Limelight;
 import com.swervedrivespecialties.exampleswerve.utils.Lidar;
 import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
+import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
 import com.swervedrivespecialties.exampleswerve.subsystems.DriveDist;
 
+import edu.wpi.first.wpilibj.AnalogEncoder;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,9 +23,11 @@ public class Robot extends TimedRobot {
     private static OI oi;
 
     private static DrivetrainSubsystem drivetrain;
+    private PowerDistributionPanel pdp;
 
     private Shooter shooter;
-    private Intake intake = new Intake();
+    private Intake intake;
+    private Kicker kicker;
     // private Limelight limelight = new Limelight();
     // private Lidar lidar = new Lidar();
     // private DriveDist drive = new DriveDist();
@@ -32,20 +40,26 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        drivetrain = DrivetrainSubsystem.getInstance();
+        intake = new Intake();
+        kicker = new Kicker(RobotMap.SERVO_IDS[0], RobotMap.SERVO_IDS[1]);
         
-        shooter = new Shooter(oi.primaryJoystick);
-
+        // drivetrain = DrivetrainSubsystem.getInstance();
+        
+        // shooter = new Shooter(oi.primaryJoystick);
+        pdp = new PowerDistributionPanel(RobotMap.PDP_ID);
+        pdp.clearStickyFaults();
     }
 
     @Override
     public void robotPeriodic() {
-        Scheduler.getInstance().run();
-        intake.intakePeriodic();
-        shooter.shooterPeriodic();
-        magazine.magazinePeriodic();
+        // Scheduler.getInstance().run();
+        intake.intakePeriodic(oi.primaryJoystick);
+        // shooter.shooterPeriodic();
+        magazine.magazinePeriodic(oi.primaryJoystick);
+
+        kicker.servoPeriodic(oi.primaryJoystick);
         
-        //SmartDashboard.putNumber("Distance", ultraSonicSensor.getDistanceInInches());
+        // SmartDashboard.putNumber("Distance", ultraSonicSensor.getDistanceInInches());
         // SmartDashboard.putNumber("Area", limelight.getTA());
         // SmartDashboard.putNumber("X", limelight.getTX());
         // SmartDashboard.putNumber("Y", limelight.getTY());

@@ -22,6 +22,8 @@ public class RobotMap {
     public static double DEFAULT_SPEED = 1.0;
     public static double SECOND_SPEED = 0.5;
 
+    public static int PDP_ID = 10;
+
     public static double PERCENT_SPEED = DEFAULT_SPEED;
     public static double WHEEL_CIRCUMFERENCE = 12.5663706144; 
     public static double GEAR_RATIO = 8.31;
@@ -35,8 +37,18 @@ public class RobotMap {
     public static final int LIDAR_OFFSET = -10;
     public static final int LIDAR_ID = 0; //PWM
 
-    // Shooter, Magazine and Intake
+    //Magazine
     public static final int MAGAZINE_MOTOR_ID = 5; // CAN
     public static final int MAGAZINE_ENCODER_ID = 90; // Analog input
     public static final int MOVE_MAGAZINE_TO_NEXT_POSITION = 1; // Joystick button
+
+    // SHOOTER
+    public static final int LEFT_SHOOTER_MOTOR_ID = 14;
+    public static final int RIGHT_SHOOTER_MOTOR_ID = 1;
+    
+    // INTAKE
+    public static final int INTAKE_ID = 9;
+
+    // SERVOS
+    public static final int[] SERVO_IDS = {1, 2};
 }

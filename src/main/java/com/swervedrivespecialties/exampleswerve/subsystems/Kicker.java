@@ -1,33 +1,35 @@
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.swervedrivespecialties.exampleswerve.autonomous;
+package com.swervedrivespecialties.exampleswerve.subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 
-public class ServoSubsystem {
+public class Kicker {
 	
-	private static Servo spinner;
+	private static Servo spinner1, spinner2;
     private static final boolean invertSpinner = false;
     	
 	private static final double MAX_ANGLE = 170.0;
 	private static final double MIN_AGLE = 0.0;
 
-	public ServoSubsystem(int id) {
-		spinner = new Servo(id);
-		
-		setSpinnerAngle(50);
+	public Kicker(int id1, int id2) {
+		spinner1 = new Servo(id1);
+		spinner2 = new Servo(id2);
 	}
 
 	public void initDefaultCommand() {
 	}
 	
 	public void setSpinnerAngle(double angle) {
-		setAngle(angle, invertSpinner, spinner, MIN_AGLE, MAX_ANGLE);
+		setAngle(angle, invertSpinner, spinner1, MIN_AGLE, MAX_ANGLE);
+		setAngle(angle, invertSpinner, spinner2, MIN_AGLE, MAX_ANGLE);
 	}
 
 	private void setAngle(double angle, boolean invert, Servo servo,
@@ -54,5 +56,13 @@ public class ServoSubsystem {
 		servo.setAngle(angle);
 
     }
+
+	public void servoPeriodic(Joystick joystick) {
+		if (joystick.getRawButton(2)) {
+			setSpinnerAngle(MAX_ANGLE);
+		} else if (joystick.getRawButton(4)) {
+			setSpinnerAngle(-MAX_ANGLE);
+		}
+	}
 
 }
