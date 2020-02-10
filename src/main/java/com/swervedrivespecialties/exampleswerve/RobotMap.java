@@ -41,6 +41,7 @@ public class RobotMap {
     public static final int MAGAZINE_MOTOR_ID = 5; // CAN
     public static final int MAGAZINE_ENCODER_ID = 90; // Analog input
     public static final int MOVE_MAGAZINE_TO_NEXT_POSITION = 1; // Joystick button
+    public static final int CHANGE_MAGAZINE_MODE = 3;
 
     // SHOOTER
     public static final int LEFT_SHOOTER_MOTOR_ID = 14;
@@ -50,5 +51,5 @@ public class RobotMap {
     public static final int INTAKE_ID = 9;
 
     // SERVOS
-    public static final int[] SERVO_IDS = {1, 2};
+    public static final int[] SERVO_IDS = {0, 1};
 }

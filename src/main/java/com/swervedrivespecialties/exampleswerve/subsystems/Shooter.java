@@ -1,6 +1,7 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
@@ -22,20 +23,22 @@ public class Shooter {
     public void shooterPeriodic() {
          // Set motor output to joystick value
 
-        double speed = 0;
+        double speed = -m_stick.getY(Hand.kLeft);
 
-        if (m_stick.getRawButton(1)) 
-            speed = .1;
-        // else if (m_stick.getRawButton(4)) 
-        //     speed = .3;
-        // else if (m_stick.getRawButton(2)) 
-        //     speed = .4;
+        if (speed < 0) speed = 0;
+
+        // if (m_stick.getRawButton(1)) 
+        //     speed = .1;
+        // // else if (m_stick.getRawButton(4)) 
+        // //     speed = .3;
+        // // else if (m_stick.getRawButton(2)) 
+        // //     speed = .4;
         
         
-        if (m_stick.getRawButton(6)) {
-            if (speed != 0)
-                speed += .4;
-        }
+        // if (m_stick.getRawButton(6)) {
+        //     if (speed != 0)
+        //         speed += .4;
+        // }
 
         speed *= .99;
 

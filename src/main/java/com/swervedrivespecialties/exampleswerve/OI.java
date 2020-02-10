@@ -14,7 +14,8 @@ public class OI {
     /*
        Add your joysticks and buttons here
      */
-    public Joystick primaryJoystick = new Joystick(0);
+    private Joystick primaryJoystick = new Joystick(0);
+    public Joystick secondaryJoystick = new Joystick(1);
 
     public OI() {
         // Back button zeroes the drivetrain
@@ -30,24 +31,12 @@ public class OI {
             new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.DEFAULT_SPEED)
         );
 
-        new JoystickAxis(primaryJoystick, 3).whileHeld(
-            new InstantCommand(() -> Intake.startIntake())
-        );
-
-        new JoystickAxis(primaryJoystick, 3).whenReleased(
-            new InstantCommand(() -> Intake.stop())
-        );
-
-        new JoystickAxis(primaryJoystick, 2).whileHeld(
-            new InstantCommand(() -> Intake.startOuttake())
-        );
-
-        new JoystickAxis(primaryJoystick, 2).whenReleased(
-            new InstantCommand(() -> Intake.stop())
-        );
-
-        new JoystickButton(primaryJoystick, RobotMap.MOVE_MAGAZINE_TO_NEXT_POSITION).whenReleased(
+        new JoystickButton(secondaryJoystick, RobotMap.MOVE_MAGAZINE_TO_NEXT_POSITION).whenReleased(
             new InstantCommand(() -> MagazineSubsystem.nextPosition())
+        );
+
+        new JoystickButton(secondaryJoystick, RobotMap.CHANGE_MAGAZINE_MODE).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.switchMode())
         );
     }
 

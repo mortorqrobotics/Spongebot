@@ -6,6 +6,7 @@ import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.Shooter;
 import com.swervedrivespecialties.exampleswerve.utils.Limelight;
+
 import com.swervedrivespecialties.exampleswerve.utils.Lidar;
 import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
 import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
@@ -33,6 +34,8 @@ public class Robot extends TimedRobot {
     // private DriveDist drive = new DriveDist();
     private MagazineSubsystem magazine = new MagazineSubsystem();
     
+    
+
     public static OI getOi() {
         return oi;
     }
@@ -45,7 +48,7 @@ public class Robot extends TimedRobot {
         
         // drivetrain = DrivetrainSubsystem.getInstance();
         
-        shooter = new Shooter(oi.primaryJoystick);
+        shooter = new Shooter(oi.secondaryJoystick);
         pdp = new PowerDistributionPanel(RobotMap.PDP_ID);
         pdp.clearStickyFaults();
     }
@@ -53,11 +56,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
-        intake.intakePeriodic(oi.primaryJoystick);
-        shooter.shooterPeriodic();
-        magazine.magazinePeriodic(oi.primaryJoystick);
 
-        kicker.servoPeriodic(oi.primaryJoystick);
+        intake.intakePeriodic(oi.secondaryJoystick);
+        shooter.shooterPeriodic();
+        magazine.magazinePeriodic(oi.secondaryJoystick);
+
+        kicker.servoPeriodic(oi.secondaryJoystick);
         
         // SmartDashboard.putNumber("Distance", ultraSonicSensor.getDistanceInInches());
         // SmartDashboard.putNumber("Area", limelight.getTA());

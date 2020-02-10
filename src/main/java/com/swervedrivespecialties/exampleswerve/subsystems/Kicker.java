@@ -10,26 +10,31 @@ package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Kicker {
 	
-	private static Servo spinner1, spinner2;
+	private static Servo spinner1;
+	// spinner2;
     private static final boolean invertSpinner = false;
     	
 	private static final double MAX_ANGLE = 170.0;
 	private static final double MIN_AGLE = 0.0;
 
+	private boolean push = false;
+
 	public Kicker(int id1, int id2) {
-		// spinner1 = new Servo(id1);
-		spinner2 = new Servo(id2)h;
+		spinner1 = new Servo(id1);
+		// spinner2 = new Servo(id2);
+		goBack();
 	}
 
 	public void initDefaultCommand() {
 	}
 	
 	public void setSpinnerAngle(double angle) {
-		// setAngle(angle, invertSpinner, spinner1, MIN_AGLE, MAX_ANGLE);
-		setAngle(angle, invertSpinner, spinner2, MIN_AGLE, MAX_ANGLE);
+		setAngle(angle, invertSpinner, spinner1, MIN_AGLE, MAX_ANGLE);
+		// setAngle(-angle, invertSpinner, spinner2, MIN_AGLE, MAX_ANGLE);
 	}
 
 	private void setAngle(double angle, boolean invert, Servo servo,
@@ -58,11 +63,27 @@ public class Kicker {
     }
 
 	public void servoPeriodic(Joystick joystick) {
+		// SmartDashboard.putNumber("LEFT SERVO", spinner2.getAngle());
+		SmartDashboard.putNumber("RIGHT SERVO", spinner1.getAngle());
+
 		if (joystick.getRawButton(2)) {
-			setSpinnerAngle(90);
+			push();
 		} else if (joystick.getRawButton(4)) {
-			setSpinnerAngle(-MAX_ANGLE);
+			goBack();
 		}
 	}
 
+	private void goBack() {
+		// spinner2.setAngle(115);
+		spinner1.setAngle(80);
+	}
+
+	private void push() {
+		// spinner2.setAngle(MAX_ANGLE);
+		spinner1.setAngle(0);
+
+		// if (spinner2.getAngle() >= MAX_ANGLE) {
+		// 	push = false;
+		// }
+	}
 }

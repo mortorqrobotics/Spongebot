@@ -31,7 +31,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
     private static DrivetrainSubsystem instance;
 
-    private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
+    private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(    
             new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
             .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER), FRONT_LEFT_ANGLE_OFFSET)
             .angleMotor(new CANSparkMax(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),

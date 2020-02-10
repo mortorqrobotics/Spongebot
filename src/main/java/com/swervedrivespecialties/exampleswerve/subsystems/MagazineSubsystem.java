@@ -7,6 +7,7 @@ import com.revrobotics.ControlType;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MagazineSubsystem {
@@ -20,22 +21,21 @@ public class MagazineSubsystem {
 
     private CANSparkMax motor = new CANSparkMax(RobotMap.MAGAZINE_MOTOR_ID, MotorType.kBrushless);
     private CANPIDController m_pidController;
+    private PIDController test;
 
-    double kP = 0.0; // 0.75; 
-    double kI = 0.0; // 0.001;
-    double kD = 0.0; // 0.05; 
+    double kP = 0.50; 
+    double kI = 0.000;
+    double kD = 0.00; 
     double kIz = 0; 
     double kFF = 0; 
     double kMaxOutput = .20; 
     double kMinOutput = -.20;
 
-    public static int rotation = 0;
+    public static double rotation = 0;
 
 
     public MagazineSubsystem() {
         m_pidController = motor.getPIDController();
-
-        // motor.getEncoder().setPosition(encoder.readAngle());
 
         m_pidController.setP(kP);
         m_pidController.setI(kI);
@@ -49,38 +49,45 @@ public class MagazineSubsystem {
         SmartDashboard.putNumber("P Gain", kP);
         SmartDashboard.putNumber("I Gain", kI);
         SmartDashboard.putNumber("D Gain", kD);
+
+        test = new PIDController(kP, kI, kD);
     }
 
     public void magazinePeriodic(Joystick joystick) {
-        if (joystick.getRawButton(3)) {
-            motor.set(.10);
-        } else {
-            motor.set(0);
-        }
-        return;
+        // if (joystick.getRawButton(3)) {
+        //     motor.set(.10);
+        // } else {
+        //     motor.set(0);
+        // }
+        // return;
 
-        // double p = SmartDashboard.getNumber("P Gain", 0);
-        // double i = SmartDashboard.getNumber("I Gain", 0);
-        // double d = SmartDashboard.getNumber("D Gain", 0);
+        double p = SmartDashboard.getNumber("P Gain", 0);
+        double i = SmartDashboard.getNumber("I Gain", 0);
+        double d = SmartDashboard.getNumber("D Gain", 0);
 
-        // if((p != kP)) { m_pidController.setP(p); kP = p; }
-        // if((i != kI)) { m_pidController.setI(i); kI = i; }
-        // if((d != kD)) { m_pidController.setD(d); kD = d; }
+        if((p != kP)) { m_pidController.setP(p); kP = p; }
+        if((i != kI)) { m_pidController.setI(i); kI = i; }
+        if((d != kD)) { m_pidController.setD(d); kD = d; }
 
 
-        // m_pidController.setReference(getTheoreticalPosition(), ControlType.kPosition);
+        m_pidController.setReference(getTheoreticalPosition(), ControlType.kPosition);
 
-        // SmartDashboard.putNumber("power", motor.getOutputCurrent());
-        // SmartDashboard.putNumber("SetPoint", getTheoreticalPosition());
-        // SmartDashboard.putNumber("Process Variable", motor.getEncoder().getPosition());
-        // SmartDashboard.putNumber("Output", motor.getAppliedOutput());
+        SmartDashboard.putNumber("power", motor.getOutputCurrent());
+        SmartDashboard.putNumber("SetPoint", getTheoreticalPosition());
+        SmartDashboard.putNumber("Process Variable", motor.getEncoder().getPosition());
+        SmartDashboard.putNumber("Output", motor.getAppliedOutput());
     }
 
     public static void nextPosition() {
         rotation++;
     }
 
+    public static void switchMode() {
+        rotation += .5;
+    }
+
     private double getTheoreticalPosition() {
-        return 1.02857142857*rotation + .0296;
+        double offset = (rotation == ((int) rotation)) ? .0296 : .0296 / 2;
+        return 1.02857142857*rotation + offset;
     }
 }
