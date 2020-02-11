@@ -23,9 +23,9 @@ public class MagazineSubsystem {
     private CANPIDController m_pidController;
     private PIDController test;
 
-    double kP = 0.50; 
-    double kI = 0.000;
-    double kD = 0.00; 
+    double kP = 0.15; 
+    double kI = 0.00002;
+    double kD = 6.0; 
     double kIz = 0; 
     double kFF = 0; 
     double kMaxOutput = .20; 
@@ -33,9 +33,16 @@ public class MagazineSubsystem {
 
     public static double rotation = 0;
 
+    public static boolean modeShoot = true;
 
-    public MagazineSubsystem() {
+    private static Joystick joystick;
+
+    public MagazineSubsystem(Joystick joystick) {
         m_pidController = motor.getPIDController();
+        motor.setControlFramePeriodMs(10);
+        // motor.set(0);
+
+        this.joystick = joystick;
 
         m_pidController.setP(kP);
         m_pidController.setI(kI);
@@ -53,13 +60,18 @@ public class MagazineSubsystem {
         test = new PIDController(kP, kI, kD);
     }
 
-    public void magazinePeriodic(Joystick joystick) {
+    public void magazinePeriodic() {
         // if (joystick.getRawButton(3)) {
         //     motor.set(.10);
         // } else {
         //     motor.set(0);
         // }
         // return;
+
+        if (joystick.getRawButton(6)) {
+            motor.stopMotor();
+            return;
+        }
 
         double p = SmartDashboard.getNumber("P Gain", 0);
         double i = SmartDashboard.getNumber("I Gain", 0);
@@ -82,12 +94,30 @@ public class MagazineSubsystem {
         rotation++;
     }
 
+    public static void previousPosition() {
+        rotation--;
+    }
+
+    public static void shoot() {
+        if (!modeShoot) {
+            switchMode();
+        }
+    }
+
+    public static void intake() {
+        if (modeShoot) {
+            switchMode();
+        }
+    }
+
     public static void switchMode() {
         rotation += .5;
+        modeShoot = !modeShoot;
     }
 
     private double getTheoreticalPosition() {
         double offset = (rotation == ((int) rotation)) ? .0296 : .0296 / 2;
+
         return 1.02857142857*rotation + offset;
     }
 }

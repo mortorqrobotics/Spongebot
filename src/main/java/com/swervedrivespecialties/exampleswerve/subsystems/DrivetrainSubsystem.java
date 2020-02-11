@@ -25,9 +25,9 @@ public class DrivetrainSubsystem extends Subsystem {
     private static final double WHEELBASE = 23;
 
     private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(269.0);
-    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(105.0);
-    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(36.0);
-    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(283.0);
+    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(101.0);
+    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(37.0);
+    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(284.0);
 
     private static DrivetrainSubsystem instance;
 

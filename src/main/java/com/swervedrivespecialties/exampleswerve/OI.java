@@ -1,10 +1,8 @@
 package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.Intake;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
 
-import org.frcteam2910.common.robot.input.JoystickAxis;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,7 +12,7 @@ public class OI {
     /*
        Add your joysticks and buttons here
      */
-    private Joystick primaryJoystick = new Joystick(0);
+    public Joystick primaryJoystick = new Joystick(0);
     public Joystick secondaryJoystick = new Joystick(1);
 
     public OI() {
@@ -35,8 +33,16 @@ public class OI {
             new InstantCommand(() -> MagazineSubsystem.nextPosition())
         );
 
-        new JoystickButton(secondaryJoystick, RobotMap.CHANGE_MAGAZINE_MODE).whenReleased(
-            new InstantCommand(() -> MagazineSubsystem.switchMode())
+        new JoystickButton(secondaryJoystick, RobotMap.MOVE_MAGAZINE_TO_PREVIOUS_POSITION).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.previousPosition())
+        );
+
+        new JoystickButton(secondaryJoystick, RobotMap.CHANGE_MAGAZINE_MODE_SHOOT).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.shoot())
+        );
+
+        new JoystickButton(secondaryJoystick, RobotMap.CHANGE_MAGAZINE_MODE_INTAKE).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.intake())
         );
     }
 

@@ -17,13 +17,17 @@ public class Intake {
     private static final double speed = 0.55;
 
     public static void startIntake() {
-        intake = true;
-        reverse = false;
+        if (!MagazineSubsystem.modeShoot) {
+            intake = true;
+            reverse = false;
+        }
     }
 
     public static void startOuttake() {
-        intake = true;
-        reverse = true;
+        if (!MagazineSubsystem.modeShoot) {
+            intake = true;
+            reverse = true;
+        }
     }
 
     public static void stop() {

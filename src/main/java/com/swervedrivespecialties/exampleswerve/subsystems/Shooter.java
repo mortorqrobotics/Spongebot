@@ -27,8 +27,8 @@ public class Shooter {
 
         if (speed < 0) speed = 0;
 
-        // if (m_stick.getRawButton(1)) 
-        //     speed = .1;
+        if (m_stick.getRawButton(7)) 
+            speed = 0.9;
         // // else if (m_stick.getRawButton(4)) 
         // //     speed = .3;
         // // else if (m_stick.getRawButton(2)) 

@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     // private Limelight limelight = new Limelight();
     // private Lidar lidar = new Lidar();
     // private DriveDist drive = new DriveDist();
-    private MagazineSubsystem magazine = new MagazineSubsystem();
+    private MagazineSubsystem magazine;
     
     
 
@@ -46,20 +46,23 @@ public class Robot extends TimedRobot {
         intake = new Intake();
         kicker = new Kicker(RobotMap.SERVO_IDS[0], RobotMap.SERVO_IDS[1]);
         
-        // drivetrain = DrivetrainSubsystem.getInstance();
+        drivetrain = DrivetrainSubsystem.getInstance();
         
         shooter = new Shooter(oi.secondaryJoystick);
         pdp = new PowerDistributionPanel(RobotMap.PDP_ID);
         pdp.clearStickyFaults();
+        
+        magazine = new MagazineSubsystem(oi.secondaryJoystick);
     }
 
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
 
-        intake.intakePeriodic(oi.secondaryJoystick);
+        // drivetrain.periodic();
+        intake.intakePeriodic(oi.primaryJoystick);
         shooter.shooterPeriodic();
-        magazine.magazinePeriodic(oi.secondaryJoystick);
+        magazine.magazinePeriodic();
 
         kicker.servoPeriodic(oi.secondaryJoystick);
         
