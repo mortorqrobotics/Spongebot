@@ -1,5 +1,6 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -12,8 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MagazineSubsystem {
 
+    public enum MagazineState {
+        SHOOT,
+        INTAKE,
+        RELEASED;
+    }
 
-    private static final int ONE_TURNING_DISTANCE = 72 / 14;
+    private static final double FIFTH_TURNING_DISTANCE = (72.0 / 14.0) / 5.0;
 
     // ONE_TURNING_DISTANCE / 6 = 60
     // private static final double MAGAZINE_ANGLE_OFFSET = -Math.toRadians(0.0);
@@ -23,8 +29,11 @@ public class MagazineSubsystem {
     private CANPIDController m_pidController;
     private PIDController test;
 
+    private static final double ANGLE_OFFSET = 10.6;
+    private MagEncoder magEncoder;
+
     double kP = 0.15; 
-    double kI = 0.00002;
+    double kI = 0; // 0.00002;
     double kD = 6.0; 
     double kIz = 0; 
     double kFF = 0; 
@@ -33,14 +42,13 @@ public class MagazineSubsystem {
 
     public static double rotation = 0;
 
-    public static boolean modeShoot = true;
+    public static MagazineState magazineState = MagazineState.SHOOT;
 
     private static Joystick joystick;
 
-    public MagazineSubsystem(Joystick joystick) {
+    public MagazineSubsystem(Joystick joystick, TalonSRX encoderTalon) {
         m_pidController = motor.getPIDController();
         motor.setControlFramePeriodMs(10);
-        // motor.set(0);
 
         this.joystick = joystick;
 
@@ -56,20 +64,42 @@ public class MagazineSubsystem {
         SmartDashboard.putNumber("P Gain", kP);
         SmartDashboard.putNumber("I Gain", kI);
         SmartDashboard.putNumber("D Gain", kD);
+        SmartDashboard.putNumber("Rotations", rotation);
 
         test = new PIDController(kP, kI, kD);
+
+        magEncoder = new MagEncoder(encoderTalon, ANGLE_OFFSET);
+        motor.getEncoder().setPosition(readPosition());
+    }
+
+    private double readPosition() {
+        double angle = magEncoder.readAngle();
+        angle *= ((72.0 / 14.0) / 360.0);
+
+        return angle;
+        // return magEncoder.readAngle() % 360;
     }
 
     public void magazinePeriodic() {
-        // if (joystick.getRawButton(3)) {
-        //     motor.set(.10);
-        // } else {
-        //     motor.set(0);
-        // }
-        // return;
+        // Temporary
+        rotation = SmartDashboard.getNumber("Rotations", 0);
 
-        if (joystick.getRawButton(6)) {
+        SmartDashboard.putNumber("power", motor.getOutputCurrent());
+        SmartDashboard.putNumber("SetPoint", getTheoreticalPosition());
+        SmartDashboard.putNumber("Process Variable", motor.getEncoder().getPosition());
+
+        SmartDashboard.putNumber("Angle", magEncoder.readAngle());
+        SmartDashboard.putNumber("Actual Angle", readPosition());
+        SmartDashboard.putNumber("Relative Angle:", motor.getEncoder().getPosition());
+
+        SmartDashboard.putNumber("Process Variable", motor.getEncoder().getPosition());
+        SmartDashboard.putNumber("Output", motor.getEncoder().getVelocity());
+
+        motor.getEncoder().setPosition(readPosition());
+
+        if (joystick.getRawButton(RobotMap.MAGAZINE_RELEASE)) {
             motor.stopMotor();
+            magazineState = MagazineState.RELEASED;
             return;
         }
 
@@ -83,41 +113,53 @@ public class MagazineSubsystem {
 
 
         m_pidController.setReference(getTheoreticalPosition(), ControlType.kPosition);
-
-        SmartDashboard.putNumber("power", motor.getOutputCurrent());
-        SmartDashboard.putNumber("SetPoint", getTheoreticalPosition());
-        SmartDashboard.putNumber("Process Variable", motor.getEncoder().getPosition());
-        SmartDashboard.putNumber("Output", motor.getAppliedOutput());
     }
 
-    public static void nextPosition() {
-        rotation++;
+    public static void nextIntakePosition() {
+        if (magazineState == MagazineState.SHOOT)
+            switchMode(true);
+        else
+            rotation++;
+
+        magazineState = MagazineState.INTAKE;
     }
 
-    public static void previousPosition() {
-        rotation--;
+    public static void previousIntakePosition() {
+        if (magazineState == MagazineState.SHOOT)
+            switchMode(false);
+        else
+            rotation--;
+
+        magazineState = MagazineState.INTAKE;
     }
 
-    public static void shoot() {
-        if (!modeShoot) {
-            switchMode();
-        }
+    public static void nextShootingPosition() {
+        if (magazineState == MagazineState.INTAKE)
+            switchMode(true);
+        else
+            rotation++;
+
+        magazineState = MagazineState.SHOOT;
     }
 
-    public static void intake() {
-        if (modeShoot) {
-            switchMode();
-        }
+    public static void previousShootingPosition() {
+        if (magazineState == MagazineState.INTAKE)
+            switchMode(false);
+        else
+            rotation--;
+
+        magazineState = MagazineState.SHOOT;
     }
 
-    public static void switchMode() {
-        rotation += .5;
-        modeShoot = !modeShoot;
+    public static void switchMode(boolean direction) {
+        // if direction is true rotate right if false rotate to the left
+        rotation += (direction == true) ? .5 : -.5;
+
+        // Switch the magazine state
+        magazineState = (magazineState == MagazineState.SHOOT) ? MagazineState.INTAKE : MagazineState.SHOOT;
     }
 
     private double getTheoreticalPosition() {
-        double offset = (rotation == ((int) rotation)) ? .0296 : .0296 / 2;
-
-        return 1.02857142857*rotation + offset;
+        return FIFTH_TURNING_DISTANCE * rotation;
     }
 }

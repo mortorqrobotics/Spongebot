@@ -8,6 +8,9 @@
 
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
+import com.swervedrivespecialties.exampleswerve.RobotMap;
+import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem.MagazineState;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,7 +20,7 @@ public class Kicker {
 	private static Servo spinner1, spinner2;
     private static final boolean invertSpinner = false;
     	
-	private static final double MAX_ANGLE = 170.0;
+	private static final double MAX_ANGLE = 90.0;
 	private static final double MIN_AGLE = 0.0;
 
 	private boolean moving = false;
@@ -67,8 +70,8 @@ public class Kicker {
 		SmartDashboard.putNumber("LEFT SERVO", spinner2.getAngle());
 		SmartDashboard.putNumber("RIGHT SERVO", spinner1.getAngle());
 
-		if (MagazineSubsystem.modeShoot) {
-			if (!moving && joystick.getRawButton(4)) {
+		if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
+			if (!moving && joystick.getRawButton(RobotMap.SHOOT_ONE_POWER_CELL)) {
 				push();
 			}
 			
@@ -79,8 +82,8 @@ public class Kicker {
 	}
 
 	private void goBack() {
-		spinner2.setAngle(75);
-		spinner1.setAngle(95);
+		spinner2.setAngle(0);
+		spinner1.set(170);
 
 		if (System.currentTimeMillis() - startTime >= 500) {
 			moving = false;
@@ -88,8 +91,10 @@ public class Kicker {
 	}
 
 	private void push() {
-		spinner2.setAngle(MAX_ANGLE);
-		spinner1.setAngle(0);
+		double angle = MAX_ANGLE - 20;
+
+		spinner2.setAngle(angle);
+		spinner1.setAngle(180 - angle);
 
 		startTime = System.currentTimeMillis();
 		moving = true;

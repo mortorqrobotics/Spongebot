@@ -3,6 +3,7 @@ package com.swervedrivespecialties.exampleswerve;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
 
+import org.frcteam2910.common.robot.input.JoystickAxis;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -29,20 +30,22 @@ public class OI {
             new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.DEFAULT_SPEED)
         );
 
-        new JoystickButton(secondaryJoystick, RobotMap.MOVE_MAGAZINE_TO_NEXT_POSITION).whenReleased(
-            new InstantCommand(() -> MagazineSubsystem.nextPosition())
+        
+
+        new JoystickButton(secondaryJoystick, RobotMap.MAGAZINE_NEXT_SHOOTING_POSITION).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.nextShootingPosition())
         );
 
-        new JoystickButton(secondaryJoystick, RobotMap.MOVE_MAGAZINE_TO_PREVIOUS_POSITION).whenReleased(
-            new InstantCommand(() -> MagazineSubsystem.previousPosition())
+        new JoystickButton(secondaryJoystick, RobotMap.MAGAZINE_PREVIOUS_SHOOTING_POSITION).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.previousShootingPosition())
         );
 
-        new JoystickButton(secondaryJoystick, RobotMap.CHANGE_MAGAZINE_MODE_SHOOT).whenReleased(
-            new InstantCommand(() -> MagazineSubsystem.shoot())
+        new JoystickAxis(secondaryJoystick, RobotMap.MAGAZINE_NEXT_INTAKE_POSITION).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.nextIntakePosition())
         );
 
-        new JoystickButton(secondaryJoystick, RobotMap.CHANGE_MAGAZINE_MODE_INTAKE).whenReleased(
-            new InstantCommand(() -> MagazineSubsystem.intake())
+        new JoystickAxis(secondaryJoystick, RobotMap.MAGAZINE_PREVIOUS_INTAKE_POSITION).whenReleased(
+            new InstantCommand(() -> MagazineSubsystem.previousIntakePosition())
         );
     }
 

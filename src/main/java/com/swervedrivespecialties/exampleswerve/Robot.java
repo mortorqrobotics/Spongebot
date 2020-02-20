@@ -5,9 +5,12 @@ import com.swervedrivespecialties.exampleswerve.subsystems.Intake;
 import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.Shooter;
+import com.swervedrivespecialties.exampleswerve.subsystems.Spinner;
+import com.swervedrivespecialties.exampleswerve.subsystems.Tube;
 import com.swervedrivespecialties.exampleswerve.utils.Limelight;
 
 import com.swervedrivespecialties.exampleswerve.utils.Lidar;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
 import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
 import com.swervedrivespecialties.exampleswerve.subsystems.DriveDist;
@@ -29,6 +32,8 @@ public class Robot extends TimedRobot {
     private Shooter shooter;
     private Intake intake;
     private Kicker kicker;
+    private Tube climber;
+    private Spinner spin;
     // private Limelight limelight = new Limelight();
     // private Lidar lidar = new Lidar();
     // private DriveDist drive = new DriveDist();
@@ -45,14 +50,17 @@ public class Robot extends TimedRobot {
         oi = new OI();
         intake = new Intake();
         kicker = new Kicker(RobotMap.SERVO_IDS[0], RobotMap.SERVO_IDS[1]);
-        
+
+        climber = new Tube(oi.secondaryJoystick);
         drivetrain = DrivetrainSubsystem.getInstance();
         
         shooter = new Shooter(oi.secondaryJoystick);
         pdp = new PowerDistributionPanel(RobotMap.PDP_ID);
         pdp.clearStickyFaults();
+
+        spin = new Spinner(oi.primaryJoystick, oi.secondaryJoystick);
         
-        magazine = new MagazineSubsystem(oi.secondaryJoystick);
+        magazine = new MagazineSubsystem(oi.secondaryJoystick, intake.intakeMotor);
     }
 
     @Override
@@ -60,9 +68,12 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().run();
 
         // drivetrain.periodic();
-        intake.intakePeriodic(oi.primaryJoystick);
+        intake.intakePeriodic(oi.primaryJoystick, oi.secondaryJoystick);
+        climber.periodic();
         shooter.shooterPeriodic();
         magazine.magazinePeriodic();
+
+        spin.periodic();
 
         kicker.servoPeriodic(oi.secondaryJoystick);
         
