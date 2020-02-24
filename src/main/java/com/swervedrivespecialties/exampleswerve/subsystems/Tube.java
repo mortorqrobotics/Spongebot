@@ -22,7 +22,7 @@ public class Tube {
     public void periodic() {
          // Set motor output to joystick value
 
-        double speed = -m_stick.getY(Hand.kLeft) / 10;
+        double speed = -m_stick.getY(Hand.kLeft) * .40;
         
         if (speed > 0 && telescope.getEncoder().getPosition() >= 27) {
             telescope.stopMotor();
@@ -33,7 +33,12 @@ public class Tube {
         }
 
         // WINCH MUST HAVE A NEGATIVE SPEED!!!!!
-        // winch.set(-.10);
+        double winchSpeed = -.30;
+
+        if (m_stick.getRawButton(RobotMap.WINCH_BUTTON))
+            winch.set(winchSpeed);
+        else
+            winch.set(0);
 
         SmartDashboard.putNumber("telescope position", telescope.getEncoder().getPosition());
     }

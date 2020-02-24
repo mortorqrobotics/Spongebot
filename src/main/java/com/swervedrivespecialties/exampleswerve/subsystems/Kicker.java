@@ -23,7 +23,7 @@ public class Kicker {
 	private static final double MAX_ANGLE = 90.0;
 	private static final double MIN_AGLE = 0.0;
 
-	private boolean moving = false;
+	public static boolean moving = false;
 
 	private long startTime = 0;
 
@@ -67,34 +67,36 @@ public class Kicker {
     }
 
 	public void servoPeriodic(Joystick joystick) {
-		SmartDashboard.putNumber("LEFT SERVO", spinner2.getAngle());
-		SmartDashboard.putNumber("RIGHT SERVO", spinner1.getAngle());
+		SmartDashboard.putNumber("LEFT SERVO", spinner2.get());
+		SmartDashboard.putNumber("RIGHT SERVO", spinner1.get());
 
 		if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
 			if (!moving && joystick.getRawButton(RobotMap.SHOOT_ONE_POWER_CELL)) {
 				push();
 			}
 			
-			if (moving && System.currentTimeMillis() - startTime >= 350) {
+			if (moving && System.currentTimeMillis() - startTime >= 400) {
 				goBack();
 			}
 		}
 	}
 
 	private void goBack() {
-		spinner2.setAngle(0);
-		spinner1.set(170);
+		int angle = 5;
 
-		if (System.currentTimeMillis() - startTime >= 500) {
+		spinner2.setAngle(angle);
+		spinner1.setAngle(170 - angle);
+
+		if (System.currentTimeMillis() - startTime >= 700) {
 			moving = false;
 		}
 	}
 
 	private void push() {
-		double angle = MAX_ANGLE - 20;
+		double angle = MAX_ANGLE;
 
 		spinner2.setAngle(angle);
-		spinner1.setAngle(180 - angle);
+		spinner1.setAngle(170 - angle);
 
 		startTime = System.currentTimeMillis();
 		moving = true;

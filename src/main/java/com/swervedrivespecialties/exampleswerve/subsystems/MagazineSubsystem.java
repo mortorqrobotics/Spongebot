@@ -27,13 +27,12 @@ public class MagazineSubsystem {
 
     private CANSparkMax motor = new CANSparkMax(RobotMap.MAGAZINE_MOTOR_ID, MotorType.kBrushless);
     private CANPIDController m_pidController;
-    private PIDController test;
 
-    private static final double ANGLE_OFFSET = 10.6;
+    private static final double ANGLE_OFFSET = 11.0;
     private MagEncoder magEncoder;
 
-    double kP = 0.15; 
-    double kI = 0; // 0.00002;
+    double kP = 0.12; 
+    double kI = 0.00007;
     double kD = 6.0; 
     double kIz = 0; 
     double kFF = 0; 
@@ -66,7 +65,6 @@ public class MagazineSubsystem {
         SmartDashboard.putNumber("D Gain", kD);
         SmartDashboard.putNumber("Rotations", rotation);
 
-        test = new PIDController(kP, kI, kD);
 
         magEncoder = new MagEncoder(encoderTalon, ANGLE_OFFSET);
         motor.getEncoder().setPosition(readPosition());
@@ -80,9 +78,10 @@ public class MagazineSubsystem {
         // return magEncoder.readAngle() % 360;
     }
 
+
     public void magazinePeriodic() {
         // Temporary
-        rotation = SmartDashboard.getNumber("Rotations", 0);
+        // rotation = SmartDashboard.getNumber("Rotations", 0);
 
         SmartDashboard.putNumber("power", motor.getOutputCurrent());
         SmartDashboard.putNumber("SetPoint", getTheoreticalPosition());
@@ -99,7 +98,6 @@ public class MagazineSubsystem {
 
         if (joystick.getRawButton(RobotMap.MAGAZINE_RELEASE)) {
             motor.stopMotor();
-            magazineState = MagazineState.RELEASED;
             return;
         }
 
@@ -134,6 +132,8 @@ public class MagazineSubsystem {
     }
 
     public static void nextShootingPosition() {
+        if (Kicker.moving) return;
+
         if (magazineState == MagazineState.INTAKE)
             switchMode(true);
         else
@@ -143,6 +143,7 @@ public class MagazineSubsystem {
     }
 
     public static void previousShootingPosition() {
+        if (Kicker.moving) return;
         if (magazineState == MagazineState.INTAKE)
             switchMode(false);
         else

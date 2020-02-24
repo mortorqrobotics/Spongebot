@@ -31,8 +31,8 @@ public class Lidar {
 	private static final int UPDATE_PERIOD = 20; // in milliseconds
 	private static final int RETRY_COUNT = 50;
 	
-	public Lidar(Port port, byte address) {
-		i2c = new I2C(port, address);
+	public Lidar() {
+		i2c = new I2C(I2C.Port.kMXP, (byte) 0x62);
 		
 		setup();
 		

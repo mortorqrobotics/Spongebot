@@ -19,7 +19,7 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 2; // CAN
 
     // Extra Staff 
-    public static double DEFAULT_SPEED = 1.0;
+    public static double DEFAULT_SPEED = 0.0; // 1.0
     public static double SECOND_SPEED = 0.5;
 
     public static int PDP_ID = 10;
@@ -65,6 +65,7 @@ public class RobotMap {
     // Climber
     public static final int TELESCOPE = 7;
     public static final int WINCH = 12;
+    public static final int WINCH_BUTTON = 10;
 
     //Spinner
     public static final int SPINNER_ID = 39;

@@ -10,15 +10,11 @@ import com.swervedrivespecialties.exampleswerve.subsystems.Tube;
 import com.swervedrivespecialties.exampleswerve.utils.Limelight;
 
 import com.swervedrivespecialties.exampleswerve.utils.Lidar;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
 import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
 import com.swervedrivespecialties.exampleswerve.subsystems.DriveDist;
 
-import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,11 +31,9 @@ public class Robot extends TimedRobot {
     private Tube climber;
     private Spinner spin;
     // private Limelight limelight = new Limelight();
-    // private Lidar lidar = new Lidar();
+    private Lidar lidar = new Lidar();
     // private DriveDist drive = new DriveDist();
     private MagazineSubsystem magazine;
-    
-    
 
     public static OI getOi() {
         return oi;
@@ -83,7 +77,7 @@ public class Robot extends TimedRobot {
         // SmartDashboard.putNumber("Y", limelight.getTY());
         // SmartDashboard.putNumber("# of corners", limelight.getXCorners().length);
         // SmartDashboard.putNumber("Distance:", limelight.getDistance());
-        // SmartDashboard.putNumber("Distance in cm:", lidar.getDistance());
+        SmartDashboard.putNumber("Distance in ft:", lidar.getDistance());
         // SmartDashboard.putNumber("Encoder Value:", drive.getEncoderValue());
     }   
 
