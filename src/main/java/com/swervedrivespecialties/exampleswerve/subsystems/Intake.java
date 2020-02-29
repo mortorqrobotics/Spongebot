@@ -6,6 +6,7 @@ import com.swervedrivespecialties.exampleswerve.RobotMap;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem.MagazineState;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake {
 
@@ -14,7 +15,7 @@ public class Intake {
 
     public TalonSRX intakeMotor = new TalonSRX(RobotMap.INTAKE_ID);
 
-    private static final double speed = 0.55;
+    private static final double speed = 0.45;
 
     public static void startIntake() {
         if (MagazineSubsystem.magazineState != MagazineState.SHOOT) {
@@ -40,11 +41,13 @@ public class Intake {
             return;
         }
 
-        if (primaryJoystick.getRawAxis(RobotMap.PRIMARY_JOYSTICK_INTAKE_AXIS) > 0.5) {
+        SmartDashboard.putNumber("POV", secondarJoystick.getPOV());
+
+        if (primaryJoystick.getRawAxis(RobotMap.PRIMARY_JOYSTICK_INTAKE_AXIS) >= 0.5) {
             intakeMotor.set(ControlMode.PercentOutput, -speed);
-        } else if (primaryJoystick.getRawAxis(RobotMap.PRIMARY_JOYSTICK_OUTTAKE_AXIS) > 0.5) {
+        } else if (primaryJoystick.getRawAxis(RobotMap.PRIMARY_JOYSTICK_OUTTAKE_AXIS) >= 0.5) {
             intakeMotor.set(ControlMode.PercentOutput, speed);
-        } else if (secondarJoystick.getRawButton(RobotMap.SECONDARY_JOYSTICK_INTAKE_BUTTON)) {
+        } else if (secondarJoystick.getPOV() != -1) {
             intakeMotor.set(ControlMode.PercentOutput, -speed);
         } else {
             intakeMotor.set(ControlMode.PercentOutput, 0);

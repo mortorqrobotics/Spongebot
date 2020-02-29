@@ -13,7 +13,6 @@ import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem.Mag
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Kicker {
 	
@@ -25,7 +24,7 @@ public class Kicker {
 
 	public static boolean moving = false;
 
-	private long startTime = 0;
+	public long startTime = 0;
 
 	public Kicker(int id1, int id2) {
 		spinner1 = new Servo(id1);
@@ -67,9 +66,6 @@ public class Kicker {
     }
 
 	public void servoPeriodic(Joystick joystick) {
-		SmartDashboard.putNumber("LEFT SERVO", spinner2.get());
-		SmartDashboard.putNumber("RIGHT SERVO", spinner1.get());
-
 		if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
 			if (!moving && joystick.getRawButton(RobotMap.SHOOT_ONE_POWER_CELL)) {
 				push();
@@ -81,8 +77,20 @@ public class Kicker {
 		}
 	}
 
-	private void goBack() {
-		int angle = 5;
+	public void kick() {
+		if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
+			if (!moving) {
+				push();
+			}
+			
+			if (moving && System.currentTimeMillis() - startTime >= 400) {
+				goBack();
+			}
+		}
+	}
+
+	public void goBack() {
+		int angle = 33;
 
 		spinner2.setAngle(angle);
 		spinner1.setAngle(170 - angle);
@@ -92,7 +100,21 @@ public class Kicker {
 		}
 	}
 
-	private void push() {
+	public int timesRotatedInAutonomous = 0;
+	public void autonomousGoBack() {
+		goBack();
+
+		if (System.currentTimeMillis() - startTime >= 700) {
+			MagazineSubsystem.nextShootingPosition();
+			timesRotatedInAutonomous++;
+		}
+	}
+
+	public int getNumberOfTimesRotated() {
+		return timesRotatedInAutonomous;
+	}
+
+	public void push() {
 		double angle = MAX_ANGLE;
 
 		spinner2.setAngle(angle);

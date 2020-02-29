@@ -15,6 +15,8 @@ public class Limelight {
 
     NetworkTableEntry xcorners, ycorners;
 
+    private double txOffset = 1;
+
     public Limelight() {
         
         table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -27,7 +29,7 @@ public class Limelight {
     }
 
     public double getTX() {
-        return tx.getDouble(0.0);
+        return tx.getDouble(0.0) + txOffset;
     }
 
     public double getTA() {

@@ -1,7 +1,6 @@
 package com.swervedrivespecialties.exampleswerve.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
@@ -13,6 +12,8 @@ public class Tube {
     private final Joystick m_stick;
     private final CANSparkMax telescope, winch;
 
+    public static boolean overideLimit = false;
+
     public Tube(final Joystick m_stick) {
         telescope = new CANSparkMax(RobotMap.TELESCOPE, MotorType.kBrushless);
         winch = new CANSparkMax(RobotMap.WINCH, MotorType.kBrushless);
@@ -22,11 +23,16 @@ public class Tube {
     public void periodic() {
          // Set motor output to joystick value
 
-        double speed = -m_stick.getY(Hand.kLeft) * .40;
+        double speed = 0;
+        if (m_stick.getRawButton(5)) {
+            speed = -.3;
+        } else if (m_stick.getRawButton(6)) {
+            speed = .3;
+        }
         
-        if (speed > 0 && telescope.getEncoder().getPosition() >= 27) {
+        if (speed > 0 && telescope.getEncoder().getPosition() >= 35 && !overideLimit) {
             telescope.stopMotor();
-        } else if(speed < 0 && telescope.getEncoder().getPosition() <= 1) {
+        } else if(speed < 0 && telescope.getEncoder().getPosition() <= 1 && !overideLimit) {
             telescope.stopMotor();
         } else {
             telescope.set(speed);

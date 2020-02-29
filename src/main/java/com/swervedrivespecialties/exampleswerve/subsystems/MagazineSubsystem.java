@@ -8,7 +8,6 @@ import com.revrobotics.ControlType;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MagazineSubsystem {
@@ -21,19 +20,15 @@ public class MagazineSubsystem {
 
     private static final double FIFTH_TURNING_DISTANCE = (72.0 / 14.0) / 5.0;
 
-    // ONE_TURNING_DISTANCE / 6 = 60
-    // private static final double MAGAZINE_ANGLE_OFFSET = -Math.toRadians(0.0);
-    // private AnalogEncoder encoder = new AnalogEncoder(RobotMap.MAGAZINE_ENCODER_ID, MAGAZINE_ANGLE_OFFSET); 
-
     private CANSparkMax motor = new CANSparkMax(RobotMap.MAGAZINE_MOTOR_ID, MotorType.kBrushless);
     private CANPIDController m_pidController;
 
     private static final double ANGLE_OFFSET = 11.0;
     private MagEncoder magEncoder;
 
-    double kP = 0.12; 
-    double kI = 0.00007;
-    double kD = 6.0; 
+    double kP = 0.2100000; 
+    double kI = 0.00015;
+    double kD = 7.250000; 
     double kIz = 0; 
     double kFF = 0; 
     double kMaxOutput = .20; 
@@ -78,12 +73,21 @@ public class MagazineSubsystem {
         // return magEncoder.readAngle() % 360;
     }
 
+    public boolean inCorrectPosition() {
+        double error = readPosition() - getTheoreticalPosition();
+        double velocity = Math.abs(motor.getEncoder().getVelocity());
+        if (Math.abs(error) <= .05 && velocity < 15.0) {
+            return true;
+        }
+        
+        return false;
+    }
 
     public void magazinePeriodic() {
         // Temporary
         // rotation = SmartDashboard.getNumber("Rotations", 0);
 
-        SmartDashboard.putNumber("power", motor.getOutputCurrent());
+        SmartDashboard.putNumber("Velocity", motor.getEncoder().getVelocity());
         SmartDashboard.putNumber("SetPoint", getTheoreticalPosition());
         SmartDashboard.putNumber("Process Variable", motor.getEncoder().getPosition());
 
@@ -132,6 +136,8 @@ public class MagazineSubsystem {
     }
 
     public static void nextShootingPosition() {
+        if (magazineState == MagazineState.INTAKE) Kicker.moving = false;
+
         if (Kicker.moving) return;
 
         if (magazineState == MagazineState.INTAKE)
@@ -143,7 +149,10 @@ public class MagazineSubsystem {
     }
 
     public static void previousShootingPosition() {
+        if (magazineState == MagazineState.INTAKE) Kicker.moving = false;
+
         if (Kicker.moving) return;
+        
         if (magazineState == MagazineState.INTAKE)
             switchMode(false);
         else

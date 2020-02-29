@@ -2,6 +2,7 @@ package com.swervedrivespecialties.exampleswerve;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
+import com.swervedrivespecialties.exampleswerve.subsystems.Tube;
 
 import org.frcteam2910.common.robot.input.JoystickAxis;
 
@@ -22,12 +23,8 @@ public class OI {
                 new InstantCommand(() -> DrivetrainSubsystem.getInstance().resetGyroscope())
         );
 
-        new JoystickButton(primaryJoystick, 5).whileHeld(
-            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.SECOND_SPEED)
-        );
-
-        new JoystickButton(primaryJoystick, 5).whenReleased(
-            new InstantCommand(() -> RobotMap.PERCENT_SPEED = RobotMap.DEFAULT_SPEED)
+        new JoystickButton(primaryJoystick, 8).whenReleased(
+            new InstantCommand(() -> Tube.overideLimit = !Tube.overideLimit)
         );
 
         
