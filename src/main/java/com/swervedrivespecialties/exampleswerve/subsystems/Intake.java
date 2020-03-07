@@ -36,12 +36,10 @@ public class Intake {
     }
 
     public void intakePeriodic(Joystick primaryJoystick, Joystick secondarJoystick) {
-        if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
-            intakeMotor.set(ControlMode.PercentOutput, 0);
-            return;
-        }
-
-        SmartDashboard.putNumber("POV", secondarJoystick.getPOV());
+        // if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
+        //     intakeMotor.set(ControlMode.PercentOutput, 0);
+        //     return;
+        // }
 
         if (primaryJoystick.getRawAxis(RobotMap.PRIMARY_JOYSTICK_INTAKE_AXIS) >= 0.5) {
             intakeMotor.set(ControlMode.PercentOutput, -speed);

@@ -65,13 +65,7 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().run();
 
         drivetrain.periodic();
-        intake.intakePeriodic(oi.primaryJoystick, oi.secondaryJoystick);
-        climber.periodic();
         magazine.magazinePeriodic();
-
-        spin.periodic();
-
-        kicker.servoPeriodic(oi.secondaryJoystick);
 
         if (oi.primaryJoystick.getRawButton(1)) {
             rotateToTarget.start();
@@ -87,7 +81,7 @@ public class Robot extends TimedRobot {
     }   
 
     private double distanceFromWall = 0;
-    private double delayTime = 0;
+    private double delayTime = 2;
     private double startTime;
     private AutonomousStates states;
     private DriveDistance driveDistance;
@@ -108,12 +102,12 @@ public class Robot extends TimedRobot {
         driveDistance = new DriveDistance(Direction.BACKWARD);
         DrivetrainSubsystem.getInstance().resetGyroscope();
         kicker.timesRotatedInAutonomous = 0;
-        // driveDistance.start();
     }
 
     @Override
     public void autonomousPeriodic() {
         super.autonomousPeriodic();
+        magazine.magazinePeriodic();
 
         switch (states) {
 
@@ -121,42 +115,50 @@ public class Robot extends TimedRobot {
             case ROTATE_TO_TARGET_STATE:
 
             if (rotateToTarget.isCompleted()) {
-                states = AutonomousStates.SHOOT_STATE;
+                states = AutonomousStates.DELAY_STATE;
                 shooter.autonomousShooterPeriodic();
             }
 
             break;
 
             case DELAY_STATE:
+            shooter.autonomousShooterPeriodic();
 
             if (System.currentTimeMillis() >= startTime + (delayTime * 1000)) {
-                states = AutonomousStates.SHOOT_STATE;
+                states = AutonomousStates.ROTATE_MAGAZINE_STATE;
             }
             
             break;
 
-            case SHOOT_STATE:
+            case ROTATE_MAGAZINE_STATE:
+            Intake.startIntake();
             shooter.autonomousShooterPeriodic();
-            
-            if (!magazine.inCorrectPosition()) return;
 
-            if (!kicker.moving) {
-                kicker.push();
-            } 
-
-            if (kicker.moving && System.currentTimeMillis() - kicker.startTime >= 400) {
-                kicker.autonomousGoBack();
-                if (kicker.getNumberOfTimesRotated() >= 3) {
-                    MagazineSubsystem.nextIntakePosition();
-                    states = AutonomousStates.STEP_BACK_STATE;
-                }
-			}
+            if (magazine.inCorrectPosition()) {
+                kicker.moved = false;
+                states = AutonomousStates.SHOOT_STATE;
+            }
 
             break;
+
+            case SHOOT_STATE:
+            shooter.autonomousShooterPeriodic();
+
+            if (kicker.kicked()) {
+                if (kicker.getNumberOfTimesRotated() >= 3) {
+                    states = AutonomousStates.STEP_BACK_STATE;
+                } else {
+                    states = AutonomousStates.ROTATE_MAGAZINE_STATE;
+                }
+            } 
+
+            break;
+
 
             case STEP_BACK_STATE:
             shooter.stop();
             driveDistance.start();
+            MagazineSubsystem.nextIntakePosition();
             states = AutonomousStates.END_STATE;
             break;
 
@@ -179,5 +181,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         shooter.teleopShooterPeriodic();
+        intake.intakePeriodic(oi.primaryJoystick, oi.secondaryJoystick);
+        climber.periodic();
+        spin.periodic();
+        kicker.servoPeriodic(oi.secondaryJoystick);
     }
 }

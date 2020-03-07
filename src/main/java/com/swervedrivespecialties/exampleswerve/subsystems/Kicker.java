@@ -25,6 +25,7 @@ public class Kicker {
 	public static boolean moving = false;
 
 	public long startTime = 0;
+	public boolean moved = false;
 
 	public Kicker(int id1, int id2) {
 		spinner1 = new Servo(id1);
@@ -62,7 +63,6 @@ public class Kicker {
 		}
 		
 		servo.setAngle(angle);
-
     }
 
 	public void servoPeriodic(Joystick joystick) {
@@ -71,43 +71,60 @@ public class Kicker {
 				push();
 			}
 			
-			if (moving && System.currentTimeMillis() - startTime >= 400) {
+			if (moving && System.currentTimeMillis() - startTime >= 200) {
 				goBack();
 			}
 		}
 	}
 
-	public void kick() {
+	public boolean kicked() {
 		if (MagazineSubsystem.magazineState == MagazineState.SHOOT) {
-			if (!moving) {
+			if (!moving && !moved) {
+				moved = true;
 				push();
 			}
 			
-			if (moving && System.currentTimeMillis() - startTime >= 400) {
-				goBack();
+			if (moving && System.currentTimeMillis() - startTime >= 200) {
+				return autonomousGoBack();
 			}
 		}
+
+		if (!moving && moved) {
+			timesRotatedInAutonomous++;
+			MagazineSubsystem.nextShootingPosition();
+			return true;
+		}
+
+		return false;
 	}
 
 	public void goBack() {
-		int angle = 33;
+		int angle = 0;
 
 		spinner2.setAngle(angle);
-		spinner1.setAngle(170 - angle);
+		spinner1.setAngle(angle);
 
-		if (System.currentTimeMillis() - startTime >= 700) {
+		int goBackTime = 450;
+
+		if (System.currentTimeMillis() - startTime >= goBackTime) {
 			moving = false;
 		}
 	}
 
 	public int timesRotatedInAutonomous = 0;
-	public void autonomousGoBack() {
+
+	public boolean autonomousGoBack() {
 		goBack();
 
-		if (System.currentTimeMillis() - startTime >= 700) {
+		if (System.currentTimeMillis() - startTime >= 650) {
+			moving = false;
 			MagazineSubsystem.nextShootingPosition();
 			timesRotatedInAutonomous++;
+
+			return true;
 		}
+
+		return false;
 	}
 
 	public int getNumberOfTimesRotated() {
@@ -115,10 +132,10 @@ public class Kicker {
 	}
 
 	public void push() {
-		double angle = MAX_ANGLE;
+		double angle = 45;
 
 		spinner2.setAngle(angle);
-		spinner1.setAngle(170 - angle);
+		spinner1.setAngle(angle);
 
 		startTime = System.currentTimeMillis();
 		moving = true;

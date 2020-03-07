@@ -25,12 +25,14 @@ public class Tube {
 
         double speed = 0;
         if (m_stick.getRawButton(5)) {
-            speed = -.3;
+            speed = -.2;
         } else if (m_stick.getRawButton(6)) {
             speed = .3;
         }
-        
-        if (speed > 0 && telescope.getEncoder().getPosition() >= 35 && !overideLimit) {
+
+        overideLimit = true;
+
+        if (speed > 0 && telescope.getEncoder().getPosition() >= 29 && !overideLimit) {
             telescope.stopMotor();
         } else if(speed < 0 && telescope.getEncoder().getPosition() <= 1 && !overideLimit) {
             telescope.stopMotor();
@@ -39,7 +41,7 @@ public class Tube {
         }
 
         // WINCH MUST HAVE A NEGATIVE SPEED!!!!!
-        double winchSpeed = -.30;
+        double winchSpeed = -.50;
 
         if (m_stick.getRawButton(RobotMap.WINCH_BUTTON))
             winch.set(winchSpeed);

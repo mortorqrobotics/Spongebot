@@ -53,7 +53,7 @@ public class Shooter {
         } else if (m_stick.getRawButton(3)) {
             setPoint = 2350;
         }  else if (m_stick.getRawButton(2)) {
-            setPoint = 2400;
+            setPoint = 2375;
         }
 
         if (setPoint == 0) {

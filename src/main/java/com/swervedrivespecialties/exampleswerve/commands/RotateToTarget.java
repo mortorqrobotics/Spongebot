@@ -70,4 +70,9 @@ public class RotateToTarget extends Command {
         }
         return false;
     }
+
+    @Override
+    public synchronized boolean isCompleted() {
+        return ((limelight.getTX() <= 1 && limelight.getTX() >= -1) || System.currentTimeMillis() - startTime >= 2000);
+    }
 }

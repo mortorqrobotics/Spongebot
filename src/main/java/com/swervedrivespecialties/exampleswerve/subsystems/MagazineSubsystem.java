@@ -76,7 +76,7 @@ public class MagazineSubsystem {
     public boolean inCorrectPosition() {
         double error = readPosition() - getTheoreticalPosition();
         double velocity = Math.abs(motor.getEncoder().getVelocity());
-        if (Math.abs(error) <= .05 && velocity < 15.0) {
+        if (Math.abs(error) <= .01 && velocity < 5.0) {
             return true;
         }
         

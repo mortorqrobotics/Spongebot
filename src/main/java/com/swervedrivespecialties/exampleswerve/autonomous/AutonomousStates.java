@@ -5,6 +5,7 @@ public enum AutonomousStates {
     ROTATE_TO_TARGET_STATE,
     AIM_STATE,
     SHOOT_STATE,
+    ROTATE_MAGAZINE_STATE,
     STEP_BACK_STATE, 
     END_STATE;
 }
