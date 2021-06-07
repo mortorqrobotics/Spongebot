@@ -6,10 +6,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.swervedrivespecialties.exampleswerve.subsystems;
+package org.team1515.spongebot.subsystems;
 
-import com.swervedrivespecialties.exampleswerve.RobotMap;
-import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem.MagazineState;
+import org.team1515.spongebot.RobotMap;
+import org.team1515.spongebot.subsystems.MagazineSubsystem.MagazineState;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;

@@ -1,4 +1,4 @@
-package com.swervedrivespecialties.exampleswerve.autonomous;
+package org.team1515.spongebot.autonomous;
 
 public enum AutonomousStates {
     DELAY_STATE,

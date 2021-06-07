@@ -1,9 +1,9 @@
-package com.swervedrivespecialties.exampleswerve.subsystems;
+package org.team1515.spongebot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.swervedrivespecialties.exampleswerve.RobotMap;
-import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem.MagazineState;
+import org.team1515.spongebot.RobotMap;
+import org.team1515.spongebot.subsystems.MagazineSubsystem.MagazineState;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

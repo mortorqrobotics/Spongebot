@@ -1,11 +1,11 @@
-package com.swervedrivespecialties.exampleswerve.subsystems;
+package org.team1515.spongebot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
-import com.swervedrivespecialties.exampleswerve.RobotMap;
+import org.team1515.spongebot.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

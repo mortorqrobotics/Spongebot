@@ -1,10 +1,10 @@
-package com.swervedrivespecialties.exampleswerve.subsystems;
+package org.team1515.spongebot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.swervedrivespecialties.exampleswerve.RobotMap;
-import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+import org.team1515.spongebot.RobotMap;
+import org.team1515.spongebot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 

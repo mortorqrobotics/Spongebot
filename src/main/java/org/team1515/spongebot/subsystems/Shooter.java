@@ -1,4 +1,4 @@
-package com.swervedrivespecialties.exampleswerve.subsystems;
+package org.team1515.spongebot.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -7,7 +7,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.swervedrivespecialties.exampleswerve.RobotMap;
+import org.team1515.spongebot.RobotMap;
 
 public class Shooter {
 

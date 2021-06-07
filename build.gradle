@@ -3,7 +3,7 @@ plugins {
     id 'edu.wpi.first.GradleRIO' version '2020.1.2'
 }
 
-def ROBOT_MAIN_CLASS = "com.swervedrivespecialties.exampleswerve.Main"
+def ROBOT_MAIN_CLASS = "org.team1515.spongebot.Main"
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11

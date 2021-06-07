@@ -1,19 +1,19 @@
-package com.swervedrivespecialties.exampleswerve;
+package org.team1515.spongebot;
 
-import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.Intake;
-import com.swervedrivespecialties.exampleswerve.subsystems.Kicker;
-import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.Shooter;
-import com.swervedrivespecialties.exampleswerve.subsystems.Spinner;
-import com.swervedrivespecialties.exampleswerve.subsystems.Tube;
-import com.swervedrivespecialties.exampleswerve.utils.Limelight;
+import org.team1515.spongebot.subsystems.DrivetrainSubsystem;
+import org.team1515.spongebot.subsystems.Intake;
+import org.team1515.spongebot.subsystems.Kicker;
+import org.team1515.spongebot.subsystems.MagazineSubsystem;
+import org.team1515.spongebot.subsystems.Shooter;
+import org.team1515.spongebot.subsystems.Spinner;
+import org.team1515.spongebot.subsystems.Tube;
+import org.team1515.spongebot.utils.Limelight;
 
-import com.swervedrivespecialties.exampleswerve.utils.Lidar;
-import com.swervedrivespecialties.exampleswerve.autonomous.AutonomousStates;
-import com.swervedrivespecialties.exampleswerve.commands.DriveDistance;
-import com.swervedrivespecialties.exampleswerve.commands.RotateToTarget;
-import com.swervedrivespecialties.exampleswerve.commands.DriveDistance.Direction;
+import org.team1515.spongebot.utils.Lidar;
+import org.team1515.spongebot.autonomous.AutonomousStates;
+import org.team1515.spongebot.commands.DriveDistance;
+import org.team1515.spongebot.commands.RotateToTarget;
+import org.team1515.spongebot.commands.DriveDistance.Direction;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;

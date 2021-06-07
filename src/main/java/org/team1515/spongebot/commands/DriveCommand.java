@@ -1,8 +1,8 @@
-package com.swervedrivespecialties.exampleswerve.commands;
+package org.team1515.spongebot.commands;
 
-import com.swervedrivespecialties.exampleswerve.Robot;
-import com.swervedrivespecialties.exampleswerve.RobotMap;
-import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
+import org.team1515.spongebot.Robot;
+import org.team1515.spongebot.RobotMap;
+import org.team1515.spongebot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import org.frcteam2910.common.robot.Utilities;

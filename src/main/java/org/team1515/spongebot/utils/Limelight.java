@@ -1,6 +1,6 @@
-package com.swervedrivespecialties.exampleswerve.utils;
+package org.team1515.spongebot.utils;
 
-import com.swervedrivespecialties.exampleswerve.RobotMap;
+import org.team1515.spongebot.RobotMap;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

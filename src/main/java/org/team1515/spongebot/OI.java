@@ -1,8 +1,8 @@
-package com.swervedrivespecialties.exampleswerve;
+package org.team1515.spongebot;
 
-import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.MagazineSubsystem;
-import com.swervedrivespecialties.exampleswerve.subsystems.Tube;
+import org.team1515.spongebot.subsystems.DrivetrainSubsystem;
+import org.team1515.spongebot.subsystems.MagazineSubsystem;
+import org.team1515.spongebot.subsystems.Tube;
 
 import org.frcteam2910.common.robot.input.JoystickAxis;
 
